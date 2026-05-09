@@ -63,3 +63,5 @@ app.post('/api/chat', async (req, res) => {
 app.listen(port, () => {
   console.log(`EduBot server running at http://localhost:${port}`);
 });
+
+module.exports = app;
