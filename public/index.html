@@ -52,8 +52,51 @@
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .subject-item span,
+        .sidebar.collapsed .sidebar-footer span {
+            display: none;
+        }
+
+        .sidebar.collapsed .sidebar-header {
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .sidebar.collapsed .subject-item {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .collapse-btn {
+            position: absolute;
+            right: -12px;
+            top: 30px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid var(--bg-dark);
+            color: white;
+            z-index: 101;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed .collapse-btn {
+            transform: rotate(180deg);
         }
 
         .sidebar-header {
@@ -345,6 +388,9 @@
 <body>
 
     <aside class="sidebar" id="sidebar">
+        <div class="collapse-btn" id="collapseBtn">
+            <i class="fas fa-chevron-left"></i>
+        </div>
         <div class="sidebar-header">
             <div class="logo-icon"><i class="fas fa-heartpulse"></i></div>
             <div class="logo-text">MediBot</div>
@@ -453,9 +499,15 @@
         const activeSubjectDisplay = document.getElementById('activeSubjectDisplay');
         const mobileToggle = document.getElementById('mobileToggle');
         const sidebar = document.getElementById('sidebar');
+        const collapseBtn = document.getElementById('collapseBtn');
 
         let chatHistory = [];
         let currentSubject = 'Umum';
+
+        // Sidebar Collapse Toggle
+        collapseBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
 
         // Auto-resize textarea
         userInput.addEventListener('input', function() {
